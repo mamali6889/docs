@@ -1,36 +1,167 @@
----
-title: About GitHub Importer
-intro: "If your source code is stored on another Git-based hosting service, you can move the code to {% data variables.product.prodname_dotcom_the_website %} using {% data variables.product.prodname_importer %}."
-redirect_from:
-  - /articles/about-github-importer
-  - /github/importing-your-projects-to-github/about-github-importer
-  - /github/importing-your-projects-to-github/importing-source-code-to-github/about-github-importer
-  - /get-started/importing-your-projects-to-github/importing-source-code-to-github/about-github-importer
-  - /articles/updating-commit-author-attribution-with-github-importer
-  - /github/importing-your-projects-to-github/updating-commit-author-attribution-with-github-importer
-  - /github/importing-your-projects-to-github/importing-source-code-to-github/updating-commit-author-attribution-with-github-importer
-  - /get-started/importing-your-projects-to-github/importing-source-code-to-github/updating-commit-author-attribution-with-github-importer
-  - /migrations/importing-source-code/using-github-importer/updating-commit-author-attribution-with-github-importer
-versions:
-  fpt: '*'
-  ghec: '*'
----
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بزرگان ایران</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #333;
+            color: #f3f3f3;
+        }
+        header {
+            background-color: #0066cc;
+            color: white;
+            padding: 20px 0;
+        }
+        nav {
+            margin-top: 20px;
+        }
+        nav a {
+            color: #0066cc;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            color: #004080;
+        }
+        nav a.dark-mode {
+            color: #80c1ff;
+        }
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        #searchInput {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .container h1 {
+            font-size: 2em;
+        }
+        .quote-box {
+            margin: 20px auto;
+            font-style: italic;
+            font-size: 1.2em;
+            color: #007acc;
+            max-width: 600px;
+        }
+        footer {
+            background-color: #e6e6e6;
+            padding: 10px 0;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        footer.dark-mode {
+            background-color: #444;
+            color: #ccc;
+        }
+        .toggle-button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .toggle-button:hover {
+            background-color: #004080;
+        }
+    </style>
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById("date").innerHTML = now.toLocaleDateString('fa-IR', options);
+            document.getElementById("time").innerHTML = now.toLocaleTimeString('fa-IR');
+        }
+        setInterval(updateDateTime, 1000);
 
-## About {% data variables.product.prodname_importer %}
+        function searchFunction() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const links = document.querySelectorAll('nav a');
 
-{% data variables.product.prodname_importer %} is a tool that quickly imports Git repositories from other hosting services to {% data variables.product.prodname_dotcom_the_website %}.
+            links.forEach(link => {
+                const text = link.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    link.style.display = 'inline';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+        }
 
-To get started with {% data variables.product.prodname_importer %}, see [AUTOTITLE](/migrations/importing-source-code/using-github-importer/importing-a-repository-with-github-importer#importing-a-repository-with-github-importer).
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelectorAll('nav a').forEach(link => link.classList.toggle('dark-mode'));
+            document.querySelector('footer').classList.toggle('dark-mode');
+        }
 
-## Capabilities and limitations of {% data variables.product.prodname_importer %}
-
-* {% data variables.product.prodname_importer %} imports the source code and commit history of a repository. It does not import other associated data from the hosting service, such as issues and pull requests.
-* {% data variables.product.prodname_importer %} is only available on {% data variables.product.prodname_dotcom_the_website %}.
-* During an import, you can authenticate with your remote repository. The repository must be accessible from the public internet. If the repository is hosted on a private network, {% data variables.product.prodname_importer %} won't be able to access it.
-* {% data variables.product.prodname_importer %} does not support repositories that use version control systems other than Git, such as Mercurial, Subversion, or Team Foundation Version Control (TFVC). For more information about alternatives to {% data variables.product.prodname_importer %}, see [AUTOTITLE](/migrations/importing-source-code/using-the-command-line-to-import-source-code/about-source-code-imports-using-the-command-line).
-* Repositories and individual files on {% data variables.product.prodname_dotcom %} are subject to size limits. For more information, see [AUTOTITLE](/repositories/working-with-files/managing-large-files/about-large-files-on-github).
-* {% data variables.product.prodname_importer %} does not move Git Large File Storage (LFS) objects from the source repository to the target repository. If you use Git LFS, you will need to either convert the Git LFS objects to regular files tracked by Git before running the migration, or move the Git LFS objects to the new repository separately after running the migration.
-
-## Further reading
-
-* [AUTOTITLE](/migrations/importing-source-code/using-the-command-line-to-import-source-code/importing-an-external-git-repository-using-the-command-line)
+        function showRandomQuote() {
+            const quotes = [
+                "بزرگی روح انسان در کلام او نمایان می‌شود.",
+                "از بزرگان درس زندگی بگیریم.",
+                "حافظ: هر که خود را نکشد یاری رفیق حق نشد.",
+                "ابن سینا: علم بدون اخلاق همانند شمشیر در دست دیوانه است.",
+                "سعدی: به راه نیک توان رفت، اگر اراده‌ایی باشد."
+            ];
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quote").textContent = quotes[randomIndex];
+        }
+        setInterval(showRandomQuote, 5000); // تغییر نقل‌قول هر ۵ ثانیه
+    </script>
+</head>
+<body>
+    <header>
+        <h1>بزرگان ایران</h1>
+    </header>
+    <nav>
+        <a href="attar.html">عطار</a>
+        <a href="avicenna.html">ابن سینا</a>
+        <a href="ferdowsi.html">فردوسی</a>
+        <a href="hafez.html">حافظ</a>
+        <a href="khayyam.html">خیام</a>
+        <a href="nezami.html">نظامی</a>
+        <a href="razi.html">رازی</a>
+        <a href="saadi.html">سعدی</a>
+        <a href="soleimani.html">سردار سلیمانی</a>
+    </nav>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="نام بزرگی را جستجو کنید..." onkeyup="searchFunction()" />
+    </div>
+    <button class="toggle-button" onclick="toggleDarkMode()">تغییر حالت روز/شب</button>
+    <div class="container">
+        <h1>صفحه اول وب‌سایت</h1>
+        <p>برای اطلاعات بیشتر روی نام‌ها کلیک کنید.</p>
+        <div class="quote-box" id="quote">از بزرگان درس زندگی بگیریم.</div>
+        <div class="date-time">
+            <p>تاریخ: <span id="date"></span></p>
+            <p>ساعت: <span id="time"></span></p>
+        </div>
+    </div>
+    <footer>
+        <p>این وب‌سایت با هدف حفظ و بزرگداشت بزرگان ایران ساخته شده است.</p>
+    </footer>
+</body>
+</html>
